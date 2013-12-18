@@ -1,0 +1,21 @@
+{
+  "name": "shaderify",
+  "version": "0.0.0",
+  "description": "Browser module and browserify plugin for compiling webgl shaders",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jhs67/shaderify.git"
+  },
+  "keywords": [
+    "webgl",
+    "shader",
+    "browserify"
+  ],
+  "author": "Jon Spencer <jon@jonspencer.ca>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jhs67/shaderify/issues"
+  },
+  "homepage": "https://github.com/jhs67/shaderify"
+}
