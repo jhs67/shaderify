@@ -18,5 +18,8 @@
     "url": "https://github.com/jhs67/shaderify/issues"
   },
   "homepage": "https://github.com/jhs67/shaderify",
-  "browser": "client.js"
+  "browser": "client.js",
+  "dependencies": {
+    "through": ">0.0.0"
+  }
 }
