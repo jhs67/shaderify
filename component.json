@@ -1,0 +1,11 @@
+{
+	"name": "shaderify",
+	"repository": "jhs67/shaderify",
+	"description": "WebGL shader program compilation and access",
+	"version": "0.0.0",
+	"dependencies": {
+	},
+	"main": "client.js",
+	"scripts": [ "client.js" ],
+	"license": "MIT"
+}
