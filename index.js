@@ -5,8 +5,14 @@ var through = require('through');
 
 exports = module.exports = shaderify;
 
-function shaderify(opts) {
-	opts = opts || {};
+function shaderify(arg) {
+	// Webpack loader.
+	if (this && typeof this.async === 'function') {
+		return webpackShaderLoader.call(this, arg);
+	}
+
+	// Browserify loader.
+	var opts = args || {};
 	if (opts.extensions === undefined) opts.extensions = ['shader'];
 	return function shader_transform(file) {
 		if (opts.extensions.indexOf(file.split('.').pop()) == -1) return through();
@@ -19,8 +25,9 @@ function shaderify(opts) {
 		}
 
 		function end() {
+			var shader;
 			try {
-				var shader = JSON.parse(buffer);
+				shader = JSON.parse(buffer);
 			}
 			catch(e) {
 				this.queue(buffer);
@@ -48,7 +55,7 @@ function shaderify(opts) {
 				throughput = null;
 				return;
 			}
-			if (throughput == null || vert === undefined || frag === undefined)
+			if (throughput === null || vert === undefined || frag === undefined)
 				return;
 
 			throughput.queue("var shaderify = require('shaderify');\n");
@@ -57,5 +64,42 @@ function shaderify(opts) {
 			throughput.queue("module.exports = function(gl) { return shaderify.compile(gl, vert, frag); }\n");
 			throughput.queue(null);
 		}
-	}
+	};
+}
+
+function escapeString(src) {
+	return 	"'" + src.replace(/'/g, "\\'").replace(/\n/g, "\\n") + "'";
+}
+
+function normalize(path) {
+	if (path[0] === '.' && path[1] === '/')
+		return path;
+	if (path[0] === '.' && path[1] === '.' && path[1] === '/')
+		return path;
+	if (path[0] === '/')
+		return path;
+	return './' + path;
+}
+
+function loadShaderProgram(src) {
+	if (Array.isArray(src))
+		return escapeString(src.join('\n'));
+	if (typeof src !== 'string')
+		return n(new Error("invalid shaderify program value: " + src));
+	if (src.indexOf('{') !== -1)
+		return escapeString(src);
+	return "require('raw-loader!" + normalize(src) + "')";
+}
+
+function webpackShaderLoader(source) {
+	this.cacheable();
+
+	var shader = JSON.parse(source);
+	var vert = loadShaderProgram(shader.vertex);
+	var frag = loadShaderProgram(shader.fragment);
+
+	return "var shaderify = require('shaderify');\n" +
+		"var vert = " + vert + ";\n" +
+		"var frag = " + frag + ";\n" +
+		"module.exports = function(gl) { return shaderify.compile(gl, vert, frag); }\n";
 }
