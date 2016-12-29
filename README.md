@@ -5,7 +5,17 @@ Browser module and browserify plug-in for compiling WebGL shaders.
 
 ## Usage
 
-Server side:
+Server side (webpack):
+
+```js
+	module: {
+		loaders: [
+			{ test: /\.shader$/, loader: "shaderify" },
+		]
+	}
+```
+
+Server side (browserify):
 ```js
 var browserify = require('browserify-middleware');
 var shaderify = require('shaderify');
@@ -41,6 +51,20 @@ Check out the example folder for a complete working implementation.
 
 On the server shaderify is a [browserify](http://browserify.org/) transform plug-in for compiling shader programs into your browserify bundles.
 
+It will also work as a [webpack](https://webpack.github.io/) loader. It works just like the browserify plug-in.
+Set up the loader in your webpack.config.js:
+```js
+	module: {
+		loaders: [
+			{ test: /\.shader$/, loader: "shaderify" },
+		]
+	}
+```
+or specify the loader inline
+```js
+var flat = require('shaderify!./flat.shader')(gl);
+```
+
 ### .shader file
 
 Browserify expects each `require` directive to specify a single file, but WebGL shaders are made up of a vertex and a fragment shader program. To specify both components of the shader program you create a JSON file with this format:
@@ -52,7 +76,7 @@ Browserify expects each `require` directive to specify a single file, but WebGL 
 ```
 Each member can be a string containing the path to a file to load. If the string contains the character '{' it is interpreted directly as a shader program. An array of lines may be specified, in which case they are `.join('\n')`'ed to make the program.
 
-When a .shader file is `require`'d in a browserify bundle it is converted into a function taking a WebGL context returning a [ShaderProgram](#shaderprogram).
+When a .shader file is `require`'d in a browserify or webpack module it is converted into a function taking a WebGL context returning a [ShaderProgram](#shaderprogram).
 
 
 ## Client Side API

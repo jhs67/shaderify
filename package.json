@@ -1,6 +1,6 @@
 {
   "name": "shaderify",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Browser module and browserify plugin for compiling webgl shaders",
   "main": "index.js",
   "repository": {
@@ -10,7 +10,8 @@
   "keywords": [
     "webgl",
     "shader",
-    "browserify"
+    "browserify",
+    "webpack"
   ],
   "author": "Jon Spencer <jon@jonspencer.ca>",
   "license": "MIT",
@@ -21,5 +22,8 @@
   "browser": "client.js",
   "dependencies": {
     "through": ">0.0.0"
+  },
+  "peerDependencies": {
+    "raw-loader": ">0.1"
   }
 }
