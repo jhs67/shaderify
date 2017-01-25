@@ -59,16 +59,12 @@ function shaderify(arg) {
 				return;
 
 			throughput.queue("var shaderify = require('shaderify');\n");
-			throughput.queue("var vert = '" + vert.replace(/'/g, "\\'").replace(/\n/g, "\\n") + "';\n");
-			throughput.queue("var frag = '" + frag.replace(/'/g, "\\'").replace(/\n/g, "\\n") + "';\n");
+			throughput.queue("var vert = " + JSON.stringify(vert) + ";\n");
+			throughput.queue("var frag = " + JSON.stringify(frag) + ";\n");
 			throughput.queue("module.exports = function(gl) { return shaderify.compile(gl, vert, frag); }\n");
 			throughput.queue(null);
 		}
 	};
-}
-
-function escapeString(src) {
-	return 	"'" + src.replace(/'/g, "\\'").replace(/\n/g, "\\n") + "'";
 }
 
 function normalize(path) {
@@ -83,11 +79,11 @@ function normalize(path) {
 
 function loadShaderProgram(src) {
 	if (Array.isArray(src))
-		return escapeString(src.join('\n'));
+		return JSON.stringify(src.join('\n'));
 	if (typeof src !== 'string')
 		return n(new Error("invalid shaderify program value: " + src));
 	if (src.indexOf('{') !== -1)
-		return escapeString(src);
+		return JSON.stringify(src);
 	return "require('raw-loader!" + normalize(src) + "')";
 }
 
