@@ -1,0 +1,21 @@
+{
+  "name": "browserify-example",
+  "version": "1.0.0",
+  "description": "an example of using shaderify with browserify",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "shaderify",
+    "example"
+  ],
+  "author": "Jon Spencer <jon@jonspencer.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "browserify-middleware": "^7.1.0",
+    "express": "^4.14.0",
+    "shaderify": "^0.1.0"
+  }
+}
