@@ -1,6 +1,7 @@
 # shaderify
 
-Browser module and browserify plug-in for compiling WebGL shaders.
+Browser module, [webpack](https://webpack.github.io/) loader,
+and [browserify](http://browserify.org/) plug-in for compiling WebGL shaders.
 
 
 ## Usage
@@ -46,6 +47,12 @@ gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 ```
 
 Check out the example folder for a complete working implementation.
+
+## Example
+
+[webpack example](example/webpack)
+
+[browserify example](example/browserify)
 
 ## Server Side API
 
