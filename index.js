@@ -12,7 +12,7 @@ function shaderify(arg) {
 	}
 
 	// Browserify loader.
-	var opts = args || {};
+	var opts = arg || {};
 	if (opts.extensions === undefined) opts.extensions = ['shader'];
 	return function shader_transform(file) {
 		if (opts.extensions.indexOf(file.split('.').pop()) == -1) return through();
