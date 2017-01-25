@@ -7,7 +7,7 @@ function createShader(src, type, gl) {
 
 	var info = gl.getShaderInfoLog(shader);
 	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-		throw new Error("Shader compiler error\n" + info)
+		throw new Error("Shader compiler error\n" + info);
 
 	return { status: info || "", shader: shader };
 }
@@ -37,18 +37,18 @@ function ShaderAttribute(gl, l) {
 
 ShaderAttribute.prototype.enable = function() {
 	this.gl.enableVertexAttribArray(this.location);
-}
+};
 
 ShaderAttribute.prototype.disable = function() {
 	this.gl.disableVertexAttribArray(this.location);
-}
+};
 
 ShaderAttribute.prototype.pointer = function(size, type, normalize, stride, offset) {
 	this.gl.vertexAttribPointer(this.location, size, type, normalize ? this.gl.TRUE : this.gl.FALSE, stride, offset);
-}
+};
 
 // Support for setters of shader uniforms.
-const UniformTypes = {
+var UniformTypes = {
 	0x1404 /* GL_INT */				: { matrix: false, setter: 'uniform1i', set: 'uniform1i' },
 	0x1406 /* GL_FLOAT */			: { matrix: false, setter: 'uniform1f', set: 'uniform1f' },
 	0x8B50 /* GL_FLOAT_VEC2 */		: { matrix: false, setter: 'uniform2fv', set: 'uniform2f' },
@@ -62,28 +62,28 @@ const UniformTypes = {
 	0x8B5C /* GL_FLOAT_MAT4 */		: { matrix: true, setter: 'uniformMatrix4fv', set: 'uniformMatrix4f' },
 	0x8B5E /* GL_SAMPLER_2D */		: { matrix: false, setter: 'uniform1i', set: 'uniform1i' },
 	0x8B60 /* GL_SAMPLER_CUBE */	: { matrix: false, setter: 'uniform1i', set: 'uniform1i' },
-}
+};
 
 function uniformGetter(l) {
-	return function() { return this.gl.getUniform(this.program, l); }
+	return function() { return this.gl.getUniform(this.program, l); };
 }
 
 function uniformSetter(s, l) {
 	return function(v) {
-		this.gl[s](l, v)
-	}
+		this.gl[s](l, v);
+	};
 }
 
 function uniformMatrixSetter(s, l) {
 	return function(v) {
-		this.gl[s](l, false, v)
-	}
+		this.gl[s](l, false, v);
+	};
 }
 
 function uniformSet(s, l) {
 	return function() {
 		this.gl[s].apply(this.gl, arguments);
-	}
+	};
 }
 
 // Class to mediate access to a shader program, it's uniforms, and it's attributes
@@ -107,17 +107,17 @@ function ShaderProgram(p, gl) {
 	}
 
 	// Setup attribute accessors
-	var c = gl.getProgramParameter(p, gl.ACTIVE_ATTRIBUTES);
-	for (var i = 0; i < c; ++i) {
+	c = gl.getProgramParameter(p, gl.ACTIVE_ATTRIBUTES);
+	for (i = 0; i < c; ++i) {
 		var a = gl.getActiveAttrib(p, i);
-		var l = gl.getAttribLocation(p, a.name);
-		this[a.name] = new ShaderAttribute(this.gl, l);
+		var b = gl.getAttribLocation(p, a.name);
+		this[a.name] = new ShaderAttribute(this.gl, b);
 	}
 }
 
 ShaderProgram.prototype.use = function() {
 	return this.gl.useProgram(this.program);
-}
+};
 
 // Compile a vertex and fragment shader into a ShaderProgram
 exports.compile = compile;
