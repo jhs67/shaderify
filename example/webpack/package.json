@@ -1,0 +1,23 @@
+{
+  "name": "webpack-example",
+  "version": "1.0.0",
+  "description": "an example of using shaderify with webpack",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "shaderify",
+    "webpack"
+  ],
+  "author": "Jon Spencer <jon@jonspencer.ca>",
+  "license": "MIT",
+  "devDependencies": {
+    "raw-loader": "^0.5.1",
+    "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "shaderify": "^0.1.0"
+  }
+}
